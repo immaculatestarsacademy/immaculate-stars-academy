@@ -542,10 +542,10 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
     <div class="hero-left">
       <div class="hero-eyebrow">Est. Abuja, Nigeria</div>
       <p class="hero-motto">★ Laying a Solid Foundation ★</p>
-      <h1 class="hero-title">Where Every Child's<br><em>Star Shines</em> Bright</h1>
-      <p class="hero-desc">Immaculate Stars Academy provides world-class Nursery, Primary, and Secondary education in the heart of Abuja — nurturing academic excellence, character, and lifelong learning.</p>
+      <h1 class="hero-title" id="hero-title">Where Every Child's<br><em>Star Shines</em> Bright</h1>
+      <p class="hero-desc" id="hero-desc">Immaculate Stars Academy provides world-class Nursery, Primary, and Secondary education in the heart of Abuja — nurturing academic excellence, character, and lifelong learning.</p>
       <div class="hero-actions">
-        <a href="#admissions" class="btn-primary">Apply for Admission</a>
+        <a href="#admissions" class="btn-primary" id="hero-btn1">Apply for Admission</a>
         <a href="#programs" class="btn-secondary">Explore Programs</a>
       </div>
       <div class="hero-stats">
@@ -702,7 +702,7 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
     <div class="section-divider"></div>
     <p class="section-sub">Enrolling at ISA is straightforward. Follow the steps below and complete the enquiry form — our admissions team will contact you within 24 hours.</p>
     <div class="admissions-grid">
-      <div class="admission-steps">
+      <div class="admission-steps" id="admissionSteps">
         <div class="admission-step">
           <div class="step-num">1</div>
           <div class="step-content">
@@ -805,7 +805,7 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
     <div class="section-label">Latest Updates</div>
     <h2 class="section-title">News & Events</h2>
     <div class="section-divider"></div>
-    <div class="news-grid">
+    <div class="news-grid" id="newsGrid">
       <div class="news-card">
         <div class="news-card-header">
           🏆
@@ -857,21 +857,21 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
             <div class="contact-icon">📍</div>
             <div>
               <h5>Address</h5>
-              <p>D9, Unity Zone Phase 2, New Nyanya,<br>Karu, Abuja-Expressway, Abuja, Nigeria</p>
+              <p id="contact-address">D9, Unity Zone Phase 2, New Nyanya,<br>Karu, Abuja-Expressway, Abuja, Nigeria</p>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-icon">📞</div>
             <div>
               <h5>Phone</h5>
-              <p><a href="tel:07084017244">07084017244</a> &nbsp;/&nbsp; <a href="tel:08034439281">08034439281</a></p>
+              <p id="contact-phones"><a href="tel:07084017244">07084017244</a> &nbsp;/&nbsp; <a href="tel:08034439281">08034439281</a></p>
             </div>
           </div>
           <div class="contact-item">
             <div class="contact-icon">📧</div>
             <div>
               <h5>Email</h5>
-              <p><a href="mailto:immaculatestarsacademy@gmail.com">immaculatestarsacademy@gmail.com</a></p>
+              <p id="contact-email"><a href="mailto:immaculatestarsacademy@gmail.com">immaculatestarsacademy@gmail.com</a></p>
             </div>
           </div>
           <div class="contact-item">
@@ -885,7 +885,7 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
             <div class="contact-icon">⏰</div>
             <div>
               <h5>School Hours</h5>
-              <p>Monday – Friday: 7:30 AM – 3:30 PM<br>Office: 8:00 AM – 5:00 PM</p>
+              <p id="contact-hours">Monday – Friday: 7:30 AM – 3:30 PM<br>Office: 8:00 AM – 5:00 PM</p>
             </div>
           </div>
         </div>
@@ -1391,5 +1391,180 @@ if (window.netlifyIdentity) {
   });
 }
 </script>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  ISA CMS DATA LOADER
+//  Reads JSON/_news markdown from repo and updates the page
+// ═══════════════════════════════════════════════════════
+
+const REPO = 'immaculatestarsacademy/immaculate-stars-academy';
+const BRANCH = 'main';
+const RAW = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+
+async function fetchJSON(path) {
+  try {
+    const r = await fetch(`${RAW}/${path}?t=${Date.now()}`);
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
+}
+
+async function fetchText(path) {
+  try {
+    const r = await fetch(`${RAW}/${path}?t=${Date.now()}`);
+    if (!r.ok) return null;
+    return await r.text();
+  } catch { return null; }
+}
+
+// Parse frontmatter from markdown
+function parseFrontmatter(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return {};
+  const obj = {};
+  match[1].split('\n').forEach(line => {
+    const [k, ...v] = line.split(':');
+    if (k && v.length) obj[k.trim()] = v.join(':').trim().replace(/^"|"$/g, '');
+  });
+  return obj;
+}
+
+// Load hero content
+async function loadHero() {
+  const data = await fetchJSON('_data/hero.json');
+  if (!data) return;
+  const titleEl = document.getElementById('hero-title');
+  if (titleEl) titleEl.innerHTML = `${data.title1}<br><em>${data.title2}</em>`;
+  const descEl = document.getElementById('hero-desc');
+  if (descEl) descEl.textContent = data.description;
+  const btn1 = document.getElementById('hero-btn1');
+  if (btn1) btn1.textContent = data.btn1_text;
+}
+
+// Load contact details
+async function loadContact() {
+  const data = await fetchJSON('_data/contact.json');
+  if (!data) return;
+  const phones = document.getElementById('contact-phones');
+  if (phones) phones.innerHTML = `<a href="tel:${data.phone1}">${data.phone1}</a> &nbsp;/&nbsp; <a href="tel:${data.phone2}">${data.phone2}</a>`;
+  const email = document.getElementById('contact-email');
+  if (email) email.innerHTML = `<a href="mailto:${data.email}">${data.email}</a>`;
+  const address = document.getElementById('contact-address');
+  if (address) address.innerHTML = `${data.address1}<br>${data.address2}`;
+  const hours = document.getElementById('contact-hours');
+  if (hours) hours.innerHTML = `${data.hours_school}<br>${data.hours_office}`;
+}
+
+// Load news from GitHub API (lists _news folder)
+async function loadNews() {
+  const grid = document.getElementById('newsGrid');
+  if (!grid) return;
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/_news?ref=${BRANCH}`);
+    if (!r.ok) return;
+    const files = await r.json();
+    if (!Array.isArray(files) || files.length === 0) return;
+
+    // Sort by filename descending (newest first)
+    const sorted = files
+      .filter(f => f.name.endsWith('.md'))
+      .sort((a,b) => b.name.localeCompare(a.name))
+      .slice(0, 3);
+
+    const colors = [
+      'linear-gradient(135deg,#0A1F44,#1a3668)',
+      'linear-gradient(135deg,#C41E3A,#9b1530)',
+      'linear-gradient(135deg,#1a6b3a,#145a30)'
+    ];
+
+    const cards = await Promise.all(sorted.map(async (file, i) => {
+      const text = await fetchText(`_news/${file.name}`);
+      if (!text) return '';
+      const fm = parseFrontmatter(text);
+      const date = fm.date ? new Date(fm.date).toLocaleDateString('en-GB',{month:'short',year:'numeric'}) : '';
+      const icon = fm.icon || '📢';
+      const cat = fm.category || 'News';
+      const title = fm.title || 'News Item';
+      const summary = fm.summary || '';
+      return `<div class="news-card">
+        <div class="news-card-header" style="background:${colors[i%3]}">
+          ${icon}
+          <span class="news-date">${date}</span>
+        </div>
+        <div class="news-card-body">
+          <div class="news-tag">${cat}</div>
+          <h4>${title}</h4>
+          <p>${summary}</p>
+        </div>
+      </div>`;
+    }));
+
+    const html = cards.filter(Boolean).join('');
+    if (html) grid.innerHTML = html;
+  } catch(e) { console.log('News load error:', e); }
+}
+
+// Load admissions steps
+async function loadAdmissions() {
+  const data = await fetchJSON('_data/admissions.json');
+  if (!data || !data.steps) return;
+  const container = document.getElementById('admissionSteps');
+  if (!container) return;
+  container.innerHTML = data.steps.map((step, i) => `
+    <div class="admission-step">
+      <div class="step-num">${i+1}</div>
+      <div class="step-content">
+        <h4>${step.title}</h4>
+        <p>${step.desc}</p>
+      </div>
+    </div>`).join('');
+}
+
+// Load gallery from GitHub API
+async function loadCMSGallery() {
+  try {
+    const r = await fetch(`https://api.github.com/repos/${REPO}/contents/_gallery?ref=${BRANCH}`);
+    if (!r.ok) return;
+    const files = await r.json();
+    if (!Array.isArray(files) || files.length === 0) return;
+
+    const mdFiles = files.filter(f => f.name.endsWith('.md'));
+    if (mdFiles.length === 0) return;
+
+    const items = await Promise.all(mdFiles.map(async file => {
+      const text = await fetchText(`_gallery/${file.name}`);
+      if (!text) return null;
+      const fm = parseFrontmatter(text);
+      if (!fm.image) return null;
+      const imgUrl = fm.image.startsWith('http') ? fm.image : `${RAW}/${fm.image}`;
+      return { src: imgUrl, caption: fm.caption || fm.title || '', year: fm.year || '2025', category: fm.category || 'graduation' };
+    }));
+
+    const valid = items.filter(Boolean);
+    if (valid.length === 0) return;
+
+    // Merge with existing GALLERY array — CMS items go first
+    const merged = [...valid, ...GALLERY];
+    // Update GALLERY_TAGS and GALLERY_YEAR_TAGS
+    const newTags = valid.map(i => i.category);
+    const newYearTags = valid.map(i => `grad${i.year}`);
+    GALLERY.unshift(...valid);
+    GALLERY_TAGS.unshift(...newTags);
+    GALLERY_YEAR_TAGS.unshift(...newYearTags);
+    buildGallery(GALLERY);
+  } catch(e) { console.log('CMS Gallery load error:', e); }
+}
+
+// Run all loaders when page is ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadHero();
+  loadContact();
+  loadNews();
+  loadAdmissions();
+  setTimeout(loadCMSGallery, 500); // slight delay so GALLERY array is ready
+});
+</script>
+
 </body>
 </html>

@@ -1,0 +1,22 @@
+{
+  "heading": "How to Apply",
+  "intro": "Enrolling at ISA is straightforward. Follow the steps below and complete the enquiry form — our admissions team will contact you within 24 hours.",
+  "steps": [
+    {
+      "title": "Submit an Enquiry",
+      "desc": "Fill in the enquiry form with your child's details and desired entry level. Our team will reach out to schedule a meeting."
+    },
+    {
+      "title": "School Visit & Assessment",
+      "desc": "Attend a guided tour and entrance assessment appropriate to your child's age and level."
+    },
+    {
+      "title": "Offer Letter & Acceptance",
+      "desc": "Receive an admission offer. Review, sign, and confirm acceptance with the required documents."
+    },
+    {
+      "title": "Fee Payment & Enrolment",
+      "desc": "Complete fee payment and receive your child's student ID, uniform details, and resumption date."
+    }
+  ]
+}
