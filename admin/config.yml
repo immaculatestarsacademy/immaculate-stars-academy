@@ -1,0 +1,93 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://immaculatestarsacademy.netlify.app
+
+collections:
+  # ── SCHOOL INFO ──────────────────────────────────────────
+  - name: "school-info"
+    label: "🏫 School Information"
+    files:
+      - name: "contact"
+        label: "Contact & Address Details"
+        file: "_data/contact.json"
+        fields:
+          - { label: "Phone Number 1", name: "phone1", widget: "string" }
+          - { label: "Phone Number 2", name: "phone2", widget: "string" }
+          - { label: "Email Address", name: "email", widget: "string" }
+          - { label: "Website URL", name: "website", widget: "string" }
+          - { label: "Address Line 1", name: "address1", widget: "string" }
+          - { label: "Address Line 2", name: "address2", widget: "string" }
+          - { label: "School Hours (Morning)", name: "hours_school", widget: "string" }
+          - { label: "Office Hours", name: "hours_office", widget: "string" }
+
+  # ── NEWS & EVENTS ─────────────────────────────────────────
+  - name: "news"
+    label: "📰 News & Events"
+    folder: "_news"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Category", name: "category", widget: "select",
+          options: ["Achievement", "Event", "Academic", "Sports", "Notice"] }
+      - { label: "Emoji Icon", name: "icon", widget: "string", default: "📢",
+          hint: "Pick an emoji to represent this news item" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Full Content", name: "body", widget: "markdown", required: false }
+
+  # ── GALLERY ───────────────────────────────────────────────
+  - name: "gallery"
+    label: "🖼️ Photo Gallery"
+    folder: "_gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Event Title", name: "title", widget: "string" }
+      - { label: "Year", name: "year", widget: "select",
+          options: ["2025", "2024", "2023", "2022"] }
+      - { label: "Category", name: "category", widget: "select",
+          options: ["graduation", "performance", "ceremony", "sports", "academic"] }
+      - { label: "Photo", name: "image", widget: "image" }
+      - { label: "Caption", name: "caption", widget: "string" }
+
+  # ── ADMISSIONS ────────────────────────────────────────────
+  - name: "admissions-info"
+    label: "📋 Admissions Page"
+    files:
+      - name: "admissions"
+        label: "Admissions Content"
+        file: "_data/admissions.json"
+        fields:
+          - { label: "Section Heading", name: "heading", widget: "string",
+              default: "How to Apply" }
+          - { label: "Intro Text", name: "intro", widget: "text" }
+          - label: "Steps"
+            name: "steps"
+            widget: "list"
+            fields:
+              - { label: "Step Title", name: "title", widget: "string" }
+              - { label: "Step Description", name: "desc", widget: "text" }
+
+  # ── HERO SECTION ──────────────────────────────────────────
+  - name: "hero"
+    label: "🌟 Hero / Homepage Banner"
+    files:
+      - name: "hero"
+        label: "Hero Section"
+        file: "_data/hero.json"
+        fields:
+          - { label: "Main Title Line 1", name: "title1", widget: "string",
+              default: "Where Every Child's" }
+          - { label: "Main Title Line 2 (Gold text)", name: "title2", widget: "string",
+              default: "Star Shines Bright" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Primary Button Text", name: "btn1_text", widget: "string",
+              default: "Apply for Admission" }
+          - { label: "Secondary Button Text", name: "btn2_text", widget: "string",
+              default: "Explore Programs" }
