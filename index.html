@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --navy: #0A1F44;
@@ -510,6 +510,100 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
 @media(max-width:900px){ .gallery-grid{ grid-template-columns: repeat(2,1fr); } .gallery-item.featured{grid-column:span 1;grid-row:span 1;} }
 
 </style>
+
+<style id="playful-theme">
+:root{--navy:#1d2b64;--navy-dark:#1d2b64;--navy-light:#3a4b9a;--crimson:#ff4d6d;--crimson-dark:#d92b4d;--gold:#ffc233;--gold-light:#ffd666;--off-white:#fffaf0;--grey-light:#e8ecff;--text-body:#44507a;--text-dark:#1d2b64}
+body{font-family:'Nunito',sans-serif;background:#fffaf0;color:#44507a}
+.section-title,.hero-title,.program-header h3,.news-card-body h4,.hero-main-card h3,.about-image-inner strong,.admission-form-card h3,.footer-brand .fn,.nav-name span:first-child,.result-student-details h3,.hero-stat strong,.about-badge strong,.portal-login h3,[style*="Playfair"]{font-family:'Fredoka',sans-serif!important}
+nav{background:rgba(255,255,255,.97)!important;border-bottom:0!important;box-shadow:0 6px 20px rgba(29,43,100,.08)}
+nav::after{content:'';position:absolute;left:0;right:0;bottom:-5px;height:5px;background:linear-gradient(90deg,#ff4d6d,#ffc233,#2ed3a0,#35b6ff,#7c5cff)}
+.nav-name{color:#1d2b64}.nav-name span:last-child{color:#ff4d6d}
+.nav-links a{color:#1d2b64;font-weight:700}.nav-links a:hover{color:#ff4d6d}
+.nav-portal-btn{background:#ff4d6d!important;color:#fff!important;border-radius:50px;padding:10px 22px;box-shadow:0 4px 0 #d92b4d}
+.nav-toggle span{background:#1d2b64}
+@media(max-width:900px){.nav-links{background:#fff!important}.nav-links a{border-bottom-color:#eef}}
+#hero{background:linear-gradient(160deg,#dff3ff 0%,#fff6d6 55%,#ffe3ec 100%)}
+.hero-bg-pattern,.hero-accent-bar{display:none}
+#hero::before{content:'';position:absolute;right:-90px;top:90px;width:340px;height:340px;border-radius:50%;background:#ffc233;opacity:.3}
+#hero::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:80px;z-index:1;background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'><path fill='%23fffaf0' d='M0 40C240 90 480 0 720 40S1200 10 1440 40V80H0Z'/></svg>") bottom/100% 100% no-repeat}
+.hero-content{z-index:2}
+h1.hero-title{color:#1d2b64}
+h1.hero-title em{color:#ff4d6d;background:linear-gradient(transparent 68%,#ffc23399 68%)}
+.hero-motto{color:#7c5cff;font-weight:800}
+.hero-desc{color:#44507a;font-size:17px}
+.hero-eyebrow{background:#fff;color:#e0245e;border:2px dashed #ff4d6d;font-weight:800}
+.btn-primary{background:#ff4d6d;color:#fff;border-radius:50px;box-shadow:0 6px 0 #d92b4d;font-size:15px}
+.btn-primary:hover{background:#ff6682;transform:translateY(-3px)}
+.btn-secondary{color:#1d2b64;border:3px solid #1d2b64;border-radius:50px;font-weight:800}
+.btn-secondary:hover{background:#1d2b64;color:#fff}
+.hero-stats{background:transparent;gap:12px}
+.hero-stat{background:#fff;border-radius:22px;box-shadow:0 5px 0 rgba(29,43,100,.12)}
+.hero-stat span{color:#44507a;font-weight:700}
+.hero-stat:nth-child(1) strong{color:#35b6ff}.hero-stat:nth-child(2) strong{color:#2ed3a0}.hero-stat:nth-child(3) strong{color:#ff8a3d}
+.hero-main-card{background:#fff;border:3px solid #1d2b64;border-radius:30px;box-shadow:10px 10px 0 #ffc233;color:#1d2b64}
+.hero-main-card h3{color:#1d2b64}.hero-main-card p{color:#44507a}
+.hero-pill{background:#f4f7ff;border:2px solid #e0e6ff;border-radius:18px}
+.hero-pill span{color:#1d2b64;font-weight:700}
+.hero-pill:nth-child(1) .hero-pill-icon{background:#35b6ff}.hero-pill:nth-child(2) .hero-pill-icon{background:#ffc233}.hero-pill:nth-child(3) .hero-pill-icon{background:#2ed3a0}.hero-pill:nth-child(4) .hero-pill-icon{background:#ff4d6d}
+.hero-pill-icon{border-radius:50%}
+.star{width:10px!important;height:10px!important;opacity:.75;animation:floaty 6s ease-in-out infinite!important}
+.star:nth-child(2n){display:none}
+.star:nth-child(5n+1){background:#ff4d6d}.star:nth-child(5n+2){background:#ffc233}.star:nth-child(5n+3){background:#2ed3a0}.star:nth-child(5n+4){background:#35b6ff}.star:nth-child(5n){background:#7c5cff}
+.star:nth-child(3n){border-radius:3px}.star:nth-child(4n){width:16px!important;height:16px!important}
+.deco{position:absolute;font-size:44px;z-index:1;animation:floaty 5s ease-in-out infinite;pointer-events:none}
+.d1{left:4%;top:22%}.d2{left:46%;top:14%;animation-delay:1s}.d3{right:6%;top:18%;animation-delay:2s}.d4{left:42%;bottom:12%;animation-delay:.5s}.d5{right:4%;bottom:14%;animation-delay:1.5s}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(14deg)}}
+.section-label{display:inline-block;background:#ffe3ec;color:#e0245e;padding:6px 16px;border-radius:50px;font-weight:800}
+.section-title{color:#1d2b64}
+.section-divider{height:8px;width:90px;border-radius:8px;background:linear-gradient(90deg,#ff4d6d,#ffc233,#2ed3a0,#35b6ff)}
+#about{background:#fffaf0}
+.about-image-block{background:linear-gradient(135deg,#7c5cff,#35b6ff);border-radius:34px;box-shadow:10px 10px 0 #ffc233}
+.about-badge{background:#ff4d6d;border-radius:20px}
+.value-card{background:#fff;border-radius:22px;border-left:0}
+.value-card:nth-child(1){border:3px solid #ff4d6d;box-shadow:5px 5px 0 #ff4d6d33}
+.value-card:nth-child(2){border:3px solid #35b6ff;box-shadow:5px 5px 0 #35b6ff33}
+.value-card:nth-child(3){border:3px solid #2ed3a0;box-shadow:5px 5px 0 #2ed3a033}
+.value-card:nth-child(4){border:3px solid #7c5cff;box-shadow:5px 5px 0 #7c5cff33}
+#programs{background:#fff}
+.program-card{border:3px solid #1d2b64;border-radius:30px;box-shadow:8px 8px 0 rgba(29,43,100,.15)}
+.program-card:hover{transform:translateY(-8px) rotate(-.6deg)}
+.program-card:nth-child(1) .program-header{background:linear-gradient(135deg,#35b6ff,#6c8cff)}
+.program-card:nth-child(2) .program-header{background:linear-gradient(135deg,#ff4d6d,#ff8a3d)}
+.program-card:nth-child(3) .program-header{background:linear-gradient(135deg,#2ed3a0,#16a97d)}
+.program-card:nth-child(1) .program-cta{background:#35b6ff}.program-card:nth-child(2) .program-cta{background:#ff4d6d}.program-card:nth-child(3) .program-cta{background:#16a97d}
+.program-cta{border-radius:50px;font-weight:800}
+.program-features li::before{color:#2ed3a0}
+#admissions{background:linear-gradient(135deg,#5b4bff,#35b6ff)}
+#admissions .section-label{background:#fff;color:#5b4bff}
+.step-num{background:#ffc233;color:#1d2b64;box-shadow:0 4px 0 #d99a00}
+.admission-form-card{border-radius:30px;box-shadow:10px 10px 0 #ffc233}
+.form-group input,.form-group select,.form-group textarea{border:2px solid #e0e6ff;border-radius:14px}
+.btn-form{background:#ff4d6d;border-radius:50px;box-shadow:0 5px 0 #d92b4d}
+.btn-form:hover{background:#ff6682}
+#gallery{background:#fff6d6}
+#gallery .section-title{color:#1d2b64}#gallery .section-sub{color:#44507a}#gallery .section-label{background:#fff;color:#e0245e}
+.gfilter-btn{border:2.5px solid #1d2b64;color:#1d2b64;font-weight:800}
+.gfilter-btn.active,.gfilter-btn:hover{background:#ff4d6d;border-color:#ff4d6d;color:#fff}
+#yearFilters{border-top-color:rgba(29,43,100,.15)!important}#yearFilters span{color:#e0245e!important}
+.gallery-item{border-radius:22px;border:5px solid #fff;box-shadow:0 8px 20px rgba(29,43,100,.15)}
+.gallery-item:nth-child(odd):hover{transform:rotate(-1.5deg)}.gallery-item:nth-child(even):hover{transform:rotate(1.5deg)}
+.gallery-count{color:#44507a}
+#news{background:#eaf7ff}
+.news-card{border:3px solid #1d2b64;border-radius:26px;box-shadow:6px 6px 0 rgba(29,43,100,.15)}
+.news-card:nth-child(1) .news-card-header{background:linear-gradient(135deg,#35b6ff,#6c8cff)!important}
+.news-card:nth-child(2) .news-card-header{background:linear-gradient(135deg,#ff4d6d,#ff8a3d)!important}
+.news-card:nth-child(3) .news-card-header{background:linear-gradient(135deg,#2ed3a0,#16a97d)!important}
+.news-tag{color:#e0245e;font-weight:800}
+#contact{background:#fff}
+.contact-icon{border-radius:50%}
+.contact-item:nth-child(1) .contact-icon{background:#ff4d6d}.contact-item:nth-child(2) .contact-icon{background:#35b6ff}.contact-item:nth-child(3) .contact-icon{background:#2ed3a0}.contact-item:nth-child(4) .contact-icon{background:#7c5cff}.contact-item:nth-child(5) .contact-icon{background:#ff8a3d}
+.map-placeholder{background:linear-gradient(135deg,#7c5cff,#35b6ff);border:4px solid #ffc233;border-radius:30px}
+[style*="background:var(--off-white);border-radius:12px"]{background:#fff6d6!important;border-radius:26px!important}
+#portal{background:linear-gradient(135deg,#7c5cff,#ff4d9d)}
+.portal-container{border-radius:28px}
+footer{background:#1d2b64;border-top:6px solid #ffc233}
+.footer-col h5{color:#ffc233}
+</style>
 </head>
 <body>
 
@@ -540,7 +634,7 @@ footer { background: var(--navy-dark); padding: 60px 5% 24px; }
 <section id="hero">
   <div class="hero-bg-pattern"></div>
   <div class="hero-accent-bar"></div>
-  <div class="stars-container" id="starsContainer"></div>
+  <div class="stars-container" id="starsContainer"></div><div class="deco d1">✏️</div><div class="deco d2">📚</div><div class="deco d3">⭐</div><div class="deco d4">🎨</div><div class="deco d5">🚀</div>
   <div class="hero-content">
     <div class="hero-left">
       <div class="hero-eyebrow">Est. Abuja, Nigeria</div>
