@@ -6,11 +6,11 @@
 # folder you deploy, next to index.html), then redeploy.
 # If the school server address ever changes, only change it here.
 # ──────────────────────────────────────────────────────────────────────
-/portal               https://pravidia-edu.bat-wrasse.ts.net/parent.html     200
-/portal/              https://pravidia-edu.bat-wrasse.ts.net/parent.html     200
-/parent.html          https://pravidia-edu.bat-wrasse.ts.net/parent.html     200
-/api/public/*         https://pravidia-edu.bat-wrasse.ts.net/api/public/:splat   200
-/uploads/*            https://pravidia-edu.bat-wrasse.ts.net/uploads/:splat      200
+/portal               https://pravidia-edu.bat-wrasse.ts.net/parent.html     200!
+/portal/              https://pravidia-edu.bat-wrasse.ts.net/parent.html     200!
+/parent.html          https://pravidia-edu.bat-wrasse.ts.net/parent.html     200!
+/api/public/*         https://pravidia-edu.bat-wrasse.ts.net/api/public/:splat   200!
+/uploads/*            https://pravidia-edu.bat-wrasse.ts.net/uploads/:splat      200!
 /parent.webmanifest   https://pravidia-edu.bat-wrasse.ts.net/parent.webmanifest  200
 /android-chrome-192x192.png https://pravidia-edu.bat-wrasse.ts.net/android-chrome-192x192.png 200
 /android-chrome-512x512.png https://pravidia-edu.bat-wrasse.ts.net/android-chrome-512x512.png 200
