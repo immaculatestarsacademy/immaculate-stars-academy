@@ -1,10 +1,10 @@
-html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Immaculate Stars Academy | Laying a Solid Foundation</title>
+</script>
 <link rel="icon" type="image/png" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
@@ -28,7 +28,7 @@ html
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; color: var(--text-body); background: var(--white); overflow-x: hidden; padding-top: 72px; }
+body { font-family: 'Inter', sans-serif; color: var(--text-body); background: var(--white); overflow-x: hidden; }
 
 /* NAV */
 nav {
@@ -56,11 +56,14 @@ nav {
   text-decoration: none; transition: background 0.2s; letter-spacing: 0.3px;
 }
 .nav-portal-btn:hover { background: var(--crimson-dark); color: white !important; }
+.nav-toggle { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.nav-toggle span { width: 25px; height: 2px; background: white; display: block; transition: 0.3s; }
 
 /* HERO */
 #hero {
-  min-height: calc(100vh - 72px); background: var(--navy-dark);
+  min-height: 100vh; background: var(--navy-dark);
   display: flex; align-items: center; position: relative; overflow: hidden;
+  padding-top: 72px;
 }
 .hero-bg-pattern {
   position: absolute; inset: 0; opacity: 0.04;
@@ -71,10 +74,17 @@ nav {
   position: absolute; top: 0; left: 0; right: 0; height: 4px;
   background: linear-gradient(90deg, var(--gold), var(--crimson), var(--gold));
 }
-.hero-content {
-  position: relative; z-index: 2; padding: 60px 5%;
-  max-width: 1200px; margin: 0 auto; width: 100%;
+.stars-container { position: absolute; inset: 0; pointer-events: none; }
+.star {
+  position: absolute; border-radius: 50%; background: white;
+  animation: twinkle 3s infinite alternate;
 }
+.hero-content {
+  position: relative; z-index: 2; padding: 80px 5%;
+  max-width: 1200px; margin: 0 auto; width: 100%;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.hero-left {}
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   background: rgba(240,165,0,0.15); border: 1px solid rgba(240,165,0,0.3);
@@ -93,7 +103,7 @@ h1.hero-title em { color: var(--gold); font-style: normal; }
   letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;
 }
 .hero-desc {
-  font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.72); margin-bottom: 40px; max-width: 580px;
+  font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.72); margin-bottom: 40px; max-width: 480px;
 }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 .btn-primary {
@@ -109,6 +119,58 @@ h1.hero-title em { color: var(--gold); font-style: normal; }
   transition: border-color 0.2s, background 0.2s;
 }
 .btn-secondary:hover { border-color: white; background: rgba(255,255,255,0.08); }
+.hero-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 1px;
+  background: rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; margin-top: 48px;
+}
+.hero-stat {
+  background: rgba(255,255,255,0.05); padding: 20px 16px; text-align: center;
+}
+.hero-stat strong { display: block; font-size: 30px; font-weight: 700; color: var(--gold); font-family: 'Playfair Display', serif; }
+.hero-stat span { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 500; }
+.hero-right { position: relative; }
+.hero-card-stack { position: relative; }
+.hero-main-card {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px; padding: 32px; color: white;
+}
+.hero-card-icon { font-size: 40px; margin-bottom: 16px; }
+.hero-main-card h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px; color: white; }
+.hero-main-card p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+.hero-pill-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.hero-pill {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px; padding: 16px; display: flex; align-items: center; gap: 12px;
+}
+.hero-pill-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--crimson); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.hero-pill span { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; }
+@keyframes twinkle { 0%{opacity:0.2} 100%{opacity:0.8} }
+
+/* SECTIONS */
+.section { padding: 100px 5%; }
+.section-inner { max-width: 1200px; margin: 0 auto; }
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--crimson); margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800; color: var(--navy); line-height: 1.2; margin-bottom: 16px;
+}
+.section-sub { font-size: 16px; line-height: 1.75; color: var(--text-body); max-width: 580px; }
+.section-divider { width: 56px; height: 4px; background: var(--gold); border-radius: 2px; margin: 20px 0; }
+
+/* ABOUT */
+#about { background: var(--off-white); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-top: 60px; }
+.about-image-block {
+  position: relative; border-radius: 16px; overflow: hidden;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  min-height: 420px; display: flex; align-items: center; justify-content: center;
+}
+.about-shield {
+  width: 100px;
+}
 </style>
 </head>
 <body>
@@ -123,6 +185,7 @@ h1.hero-title em { color: var(--gold); font-style: normal; }
   </a>
   <div class="nav-links">
     <a href="#hero">Home</a>
+    <a href="#about">About</a>
     <a href="/portal" class="nav-portal-btn">Parent Portal</a>
   </div>
 </nav>
@@ -139,12 +202,12 @@ h1.hero-title em { color: var(--gold); font-style: normal; }
         <p class="hero-desc">Empowering students with holistic education, moral structure, and an innovative platform built for early development.</p>
         <div class="hero-actions">
           <a href="/portal" class="btn-primary">Access Parent Portal</a>
+          <a href="#about" class="btn-secondary">Learn More</a>
         </div>
       </div>
     </div>
   </section>
 </main>
 
-</script>
 </body>
 </html>
