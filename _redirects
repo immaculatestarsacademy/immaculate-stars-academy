@@ -1,0 +1,19 @@
+# ──────────────────────────────────────────────────────────────────────
+# OPTION A (recommended) — make https://immaculatestarsacademy.netlify.app/portal
+# open the live Parent Portal, while parents stay on the school's website address.
+# Netlify "proxies" the three paths below to the school server (HTTP 200 = rewrite, not redirect).
+# Paste these lines at the TOP of the _redirects file in your Netlify site (create it in the
+# folder you deploy, next to index.html), then redeploy.
+# If the school server address ever changes, only change it here.
+# ──────────────────────────────────────────────────────────────────────
+/portal               https://pravidia-edu.bat-wrasse.ts.net/parent.html     200
+/portal/              https://pravidia-edu.bat-wrasse.ts.net/parent.html     200
+/parent.html          https://pravidia-edu.bat-wrasse.ts.net/parent.html     200
+/api/public/*         https://pravidia-edu.bat-wrasse.ts.net/api/public/:splat   200
+/uploads/*            https://pravidia-edu.bat-wrasse.ts.net/uploads/:splat      200
+/parent.webmanifest   https://pravidia-edu.bat-wrasse.ts.net/parent.webmanifest  200
+/android-chrome-192x192.png https://pravidia-edu.bat-wrasse.ts.net/android-chrome-192x192.png 200
+/android-chrome-512x512.png https://pravidia-edu.bat-wrasse.ts.net/android-chrome-512x512.png 200
+/icon-maskable-192.png https://pravidia-edu.bat-wrasse.ts.net/icon-maskable-192.png 200
+/icon-maskable-512.png https://pravidia-edu.bat-wrasse.ts.net/icon-maskable-512.png 200
+/pwa.js               https://pravidia-edu.bat-wrasse.ts.net/pwa.js          200
