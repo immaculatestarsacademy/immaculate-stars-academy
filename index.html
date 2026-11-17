@@ -1298,17 +1298,12 @@ footer{
     <p class="section-sub">A glimpse into the vibrant events, performances, and milestones that make ISA a truly special school community.</p>
     <div class="gallery-filters" id="mainFilters">
       <button class="gfilter-btn active" onclick="filterGallery('all',this)">All Photos</button>
-      <button class="gfilter-btn" onclick="showGradYears(this)">🎓 Graduation ▾</button>
+      <button class="gfilter-btn" onclick="showGradYears(this)">📅 Year &amp; event ▾</button>
       <button class="gfilter-btn" onclick="filterGallery('performance',this)">🎤 Performances</button>
       <button class="gfilter-btn" onclick="filterGallery('ceremony',this)">🏅 Ceremony</button>
     </div>
     <div class="gallery-filters" id="yearFilters" style="display:none;margin-top:0;border-top:1px solid rgba(255,255,255,0.1);padding-top:12px">
-      <span style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:1px;align-self:center;">SELECT YEAR:</span>
-      <button class="gfilter-btn" onclick="filterGallery('grad2026',this)">📸 2026 Graduation</button>
-      <button class="gfilter-btn" onclick="filterGallery('grad2025',this)">📸 2025 Graduation</button>
-      <button class="gfilter-btn" onclick="filterGallery('grad2024',this)">📸 2024 Graduation</button>
-      <button class="gfilter-btn" style="opacity:0.5;cursor:default">📸 2023 (Coming Soon)</button>
-      <button class="gfilter-btn" onclick="filterGallery('graduation',this);hideYears()">← All Graduations</button>
+      <span style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:1px;align-self:center;">YEAR &amp; EVENT:</span>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
     <p class="gallery-count" id="galleryCount"></p>
@@ -1695,13 +1690,21 @@ function showGradYears(btn){
 function renderGalleryYears(){
   const box=document.getElementById('yearFilters');
   if(!box) return;
-  const years=[...new Set(GALLERY_YEAR_TAGS.map(tag=>{
-    const match=String(tag).match(/^grad(\d{4})$/);
-    return match?match[1]:null;
-  }).filter(Boolean))].sort((a,b)=>Number(b)-Number(a));
-  box.innerHTML='<span style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:1px;align-self:center;">SELECT YEAR:</span>'+
-    years.map(year=>`<button class="gfilter-btn" onclick="filterGallery('grad${year}',this)">📸 ${year} Graduation</button>`).join('')+
-    '<button class="gfilter-btn" onclick="filterGallery(\'graduation\',this);hideYears()">← All Graduations</button>';
+  const events=[...new Set(GALLERY_YEAR_TAGS.map((tag,index)=>{
+    const match=String(tag).match(/(\d{4})$/);
+    return match?`${match[1]}:${GALLERY_TAGS[index]}`:null;
+  }).filter(Boolean))].sort((a,b)=>{
+    const [yearA,categoryA]=a.split(':');
+    const [yearB,categoryB]=b.split(':');
+    return Number(yearB)-Number(yearA)||categoryA.localeCompare(categoryB);
+  });
+  const categoryName=category=>category.charAt(0).toUpperCase()+category.slice(1);
+  box.innerHTML='<span style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:1px;align-self:center;">SELECT YEAR &amp; EVENT:</span>'+
+    events.map(event=>{
+      const [year,category]=event.split(':');
+      return `<button class="gfilter-btn" onclick="filterGallery('eventyear:${year}:${category}',this)">📸 ${year} · ${categoryName(category)}</button>`;
+    }).join('')+
+    '<button class="gfilter-btn" onclick="filterGallery(\'all\',this);hideYears()">All events</button>';
 }
 function hideYears(){
   document.getElementById('yearFilters').style.display='none';
@@ -1730,10 +1733,14 @@ function filterGallery(tag, btn) {
   if(btn) btn.classList.add('active');
   let items;
   if(tag === 'all') items = GALLERY;
+  else if(tag.startsWith('eventyear:')) {
+    const [,year,category]=tag.split(':');
+    items = GALLERY.filter((_,i)=>GALLERY_TAGS[i]===category&&String(GALLERY_YEAR_TAGS[i]).endsWith(year));
+  }
   else if(tag.startsWith('grad20')) items = GALLERY.filter((_,i)=>GALLERY_YEAR_TAGS[i]===tag);
   else items = GALLERY.filter((_,i)=>GALLERY_TAGS[i]===tag);
   buildGallery(items);
-  if(!tag.startsWith('grad20') && tag !== 'graduation') {
+  if(!tag.startsWith('eventyear:')&&!tag.startsWith('grad20')&&tag!=='graduation') {
     document.getElementById('yearFilters').style.display='none';
   }
 }
@@ -1941,10 +1948,12 @@ async function loadCMSGallery() {
       const fm = parseFrontmatter(text);
       const photos = (Array.isArray(fm.image) ? fm.image : [fm.image]).filter(image => typeof image === 'string' && image.trim());
       if (!photos.length) return null;
+      const year = String(fm.year || '2025');
+      const eventYear = /^\d{4}$/.test(year) ? year : '2025';
       return photos.map(image => ({
         src: image.startsWith('http') ? image : `${RAW}/${image.replace(/^\/+/, '')}`,
         caption: fm.caption || fm.title || '',
-        year: fm.year || '2025',
+        year: eventYear,
         category: fm.category || 'graduation'
       }));
     }));
@@ -1971,6 +1980,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadContact();
   loadNews();
   loadAdmissions();
+  renderGalleryYears();
   setTimeout(loadCMSGallery, 500); // slight delay so GALLERY array is ready
 });
 </script>
