@@ -1692,6 +1692,17 @@ function showGradYears(btn){
   btn.classList.add('active');
   document.getElementById('yearFilters').style.display='flex';
 }
+function renderGalleryYears(){
+  const box=document.getElementById('yearFilters');
+  if(!box) return;
+  const years=[...new Set(GALLERY_YEAR_TAGS.map(tag=>{
+    const match=String(tag).match(/^grad(\d{4})$/);
+    return match?match[1]:null;
+  }).filter(Boolean))].sort((a,b)=>Number(b)-Number(a));
+  box.innerHTML='<span style="color:var(--gold);font-size:12px;font-weight:700;letter-spacing:1px;align-self:center;">SELECT YEAR:</span>'+
+    years.map(year=>`<button class="gfilter-btn" onclick="filterGallery('grad${year}',this)">📸 ${year} Graduation</button>`).join('')+
+    '<button class="gfilter-btn" onclick="filterGallery(\'graduation\',this);hideYears()">← All Graduations</button>';
+}
 function hideYears(){
   document.getElementById('yearFilters').style.display='none';
 }
@@ -1804,10 +1815,21 @@ function parseFrontmatter(text) {
   const match = text.match(/^---\n([\s\S]*?)\n---/);
   if (!match) return {};
   const obj = {};
-  match[1].split('\n').forEach(line => {
-    const [k, ...v] = line.split(':');
-    if (k && v.length) obj[k.trim()] = v.join(':').trim().replace(/^"|"$/g, '');
-  });
+  const lines = match[1].split('\n');
+  for (let i=0;i<lines.length;i++) {
+    const field=lines[i].match(/^([A-Za-z0-9_-]+):(?:\s*(.*))?$/);
+    if(!field) continue;
+    const key=field[1], value=(field[2]||'').trim();
+    if(value) {
+      obj[key]=value.replace(/^(['"])(.*)\1$/,'$2');
+      continue;
+    }
+    const items=[];
+    while(i+1<lines.length&&/^\s+-\s*/.test(lines[i+1])) {
+      items.push(lines[++i].replace(/^\s+-\s*/,'').trim().replace(/^(['"])(.*)\1$/,'$2'));
+    }
+    obj[key]=items;
+  }
   return obj;
 }
 
@@ -1917,12 +1939,17 @@ async function loadCMSGallery() {
       const text = await fetchText(`_gallery/${file.name}`);
       if (!text) return null;
       const fm = parseFrontmatter(text);
-      if (!fm.image) return null;
-      const imgUrl = fm.image.startsWith('http') ? fm.image : `${RAW}/${fm.image}`;
-      return { src: imgUrl, caption: fm.caption || fm.title || '', year: fm.year || '2025', category: fm.category || 'graduation' };
+      const photos = (Array.isArray(fm.image) ? fm.image : [fm.image]).filter(image => typeof image === 'string' && image.trim());
+      if (!photos.length) return null;
+      return photos.map(image => ({
+        src: image.startsWith('http') ? image : `${RAW}/${image.replace(/^\/+/, '')}`,
+        caption: fm.caption || fm.title || '',
+        year: fm.year || '2025',
+        category: fm.category || 'graduation'
+      }));
     }));
 
-    const valid = items.filter(Boolean);
+    const valid = items.filter(Boolean).flat();
     if (valid.length === 0) return;
 
     // Merge with existing GALLERY array — CMS items go first
@@ -1933,6 +1960,7 @@ async function loadCMSGallery() {
     GALLERY.unshift(...valid);
     GALLERY_TAGS.unshift(...newTags);
     GALLERY_YEAR_TAGS.unshift(...newYearTags);
+    renderGalleryYears();
     buildGallery(GALLERY);
   } catch(e) { console.log('CMS Gallery load error:', e); }
 }
